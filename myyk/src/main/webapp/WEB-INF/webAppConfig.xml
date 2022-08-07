@@ -25,14 +25,12 @@
 	</bean>
 		
 	<!-- APP -->
-			<!-- 
 	<mvc:interceptors>
 		<mvc:interceptor>
 			<mvc:mapping path="/**"/>
-			<bean id="" class=""/>
+			<bean id="serviceFunctionInterceptor" class="myyk.util.interceptor.ServiceFunctionInterceptor"/>
 		</mvc:interceptor>
 	</mvc:interceptors>
-			 -->
 		
 	<!-- View Resolver -->
 	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
