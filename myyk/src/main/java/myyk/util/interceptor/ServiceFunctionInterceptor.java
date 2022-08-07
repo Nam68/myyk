@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+import myyk.backend.BaseController;
 import myyk.util.annotation.ServiceFunction;
 
 public class ServiceFunctionInterceptor extends HandlerInterceptorAdapter {
@@ -18,7 +19,7 @@ public class ServiceFunctionInterceptor extends HandlerInterceptorAdapter {
 		
 		ServiceFunction function = handlerMethod.getBeanType().getAnnotation(ServiceFunction.class);
 		
-		request.setAttribute("category", function.value());
+		request.setAttribute(BaseController.HEADER, function.value());
 		
 		return super.preHandle(request, response, handler);
 	}
