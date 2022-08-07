@@ -1,6 +1,13 @@
+<<<<<<< HEAD
 /catalina.policy
 /catalina.properties
 /context.xml
 /server.xml
+=======
+/server.xml
+/catalina.policy
+/catalina.properties
+/context.xml
+>>>>>>> refs/heads/master
 /tomcat-users.xml
 /web.xml
