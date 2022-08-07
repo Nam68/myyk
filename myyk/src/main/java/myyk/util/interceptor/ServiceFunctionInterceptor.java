@@ -19,7 +19,7 @@ public class ServiceFunctionInterceptor extends HandlerInterceptorAdapter {
 		
 		ServiceFunction function = handlerMethod.getBeanType().getAnnotation(ServiceFunction.class);
 		
-		request.setAttribute(BaseController.HEADER, function.value());
+		request.setAttribute(BaseController.HEADER, function.value().toString());
 		
 		return super.preHandle(request, response, handler);
 	}
