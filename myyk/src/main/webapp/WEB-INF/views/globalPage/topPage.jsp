@@ -11,6 +11,6 @@ hello world!
 ${requestScope.header }
 ${sessionScope.period }<br>
 <a href="/globalPage/homePage.do">next</a>
-<a href="/globalPage/skipTopPage.do">not show</a>
+<a href="/globalPage/skipTopPage.do?value=true">not show</a>
 </body>
 </html>

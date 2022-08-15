@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import myyk.backend.BaseController;
 import myyk.util.CookieTool;
 import myyk.util.annotation.ServiceFunction;
+import myyk.util.exception.SystemException;
 
 @Controller
 @ServiceFunction
@@ -32,9 +33,12 @@ public class TopPageController extends BaseController {
 		return "/globalPage/topPage";
 	}
 	
-	@RequestMapping(path = "/globalPage/skipTopPage.do", method = RequestMethod.POST)
-	public String execute(HttpServletResponse response) {
-		CookieTool.makeCookie(SKIP_TOP_PAGE, "true", CookieTool.COOKIE_WEEK, response);
+	@RequestMapping("/globalPage/skipTopPage.do")
+	public String execute(HttpServletResponse response, String value) throws SystemException {
+		if(value == null || value.isEmpty()) {
+			throw new SystemException("property missing");
+		}
+		CookieTool.makeCookie(SKIP_TOP_PAGE, value, CookieTool.COOKIE_WEEK, response);
 		return "/globalPage/homePage";
 	}
 	
