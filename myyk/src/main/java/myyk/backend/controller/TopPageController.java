@@ -10,8 +10,10 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import myyk.backend.BaseController;
+import myyk.util.CookieTool;
 import myyk.util.annotation.ServiceFunction;
 
 @Controller
@@ -30,15 +32,9 @@ public class TopPageController extends BaseController {
 		return "/globalPage/topPage";
 	}
 	
-	@RequestMapping("/globalPage/skipTopPage.do")
+	@RequestMapping(path = "/globalPage/skipTopPage.do", method = RequestMethod.POST)
 	public String execute(HttpServletResponse response) {
-		
-		Cookie cookie = new Cookie(SKIP_TOP_PAGE, SKIP_TOP_PAGE);
-		cookie.setMaxAge(0);
-		cookie.setPath("/");
-		
-		response.addCookie(cookie);
-		
+		CookieTool.makeCookie(SKIP_TOP_PAGE, "true", CookieTool.COOKIE_WEEK, response);
 		return "/globalPage/homePage";
 	}
 	
