@@ -31,7 +31,13 @@
 			<bean id="serviceFunctionInterceptor" class="myyk.util.interceptor.ServiceFunctionInterceptor"/>
 		</mvc:interceptor>
 	</mvc:interceptors>
-		
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/myyk/globalPage/topPage.do"/>
+			<bean id="skipTopPageInterceptor" class="myyk.util.interceptor.SkipTopPageInterceptor"/>
+		</mvc:interceptor>
+	</mvc:interceptors>		
+			
 	<!-- View Resolver -->
 	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="contentType" value="text/html; charset=UTF-8" />
