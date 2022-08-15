@@ -15,6 +15,7 @@
 	
 	<!-- 컨트롤러 자동 매칭 -->
 	<context:component-scan base-package="myyk.backend.controller"/>
+	<context:component-scan base-package="myyk.util.exception"/> <!--  -->
 	
 	<!-- 오토와이어드 -->
 	<bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"/>
@@ -31,13 +32,7 @@
 			<bean id="serviceFunctionInterceptor" class="myyk.util.interceptor.ServiceFunctionInterceptor"/>
 		</mvc:interceptor>
 	</mvc:interceptors>
-	<mvc:interceptors>
-		<mvc:interceptor>
-			<mvc:mapping path="/myyk/globalPage/topPage.do"/>
-			<bean id="skipTopPageInterceptor" class="myyk.util.interceptor.SkipTopPageInterceptor"/>
-		</mvc:interceptor>
-	</mvc:interceptors>		
-			
+		
 	<!-- View Resolver -->
 	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="contentType" value="text/html; charset=UTF-8" />
@@ -70,4 +65,5 @@
 		class="org.springframework.data.web.PageableHandlerMethodArgumentResolver">
 		<constructor-arg ref="sortResolver" />
 	</bean>
+
 </beans>
