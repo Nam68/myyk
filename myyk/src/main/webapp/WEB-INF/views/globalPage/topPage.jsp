@@ -7,10 +7,10 @@
 <title>Insert title here</title>
 </head>
 <body>
-hello world!
-${requestScope.header }
+hello world!<br>
+${requestScope.header }<br>
 ${sessionScope.period }<br>
-<a href="/globalPage/homePage.do">next</a>
-<a href="/globalPage/skipTopPage.do?value=true">not show</a>
+<a href="/myyk/globalPage/homePage.do">next</a>
+<a href="/myyk/globalPage/skipTopPage.do?value=true">not show</a>
 </body>
 </html>
