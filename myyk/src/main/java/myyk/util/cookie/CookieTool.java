@@ -1,4 +1,4 @@
-package myyk.util;
+package myyk.util.cookie;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -171,6 +171,10 @@ public class CookieTool {
 		
 		Cookie[] cookies = request.getCookies();
 		
+		if(cookies == null) {
+			return "";
+		}
+		
 		for(Cookie cookie : cookies) {
 			if(cookie.getName().equals(name)) {
 				if(cookie.getMaxAge() > 0) {
@@ -183,3 +187,4 @@ public class CookieTool {
 	}
 	
 }
+

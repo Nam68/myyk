@@ -6,20 +6,26 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import myyk.util.annotation.ServiceFunction;
-import myyk.util.cookie.CookieName;
+import myyk.backend.BaseController;
+import myyk.util.CookieTool;
 
-public class ServiceFunctionInterceptor extends HandlerInterceptorAdapter {
+/**
+ * 
+ */
+public class LanguageSettingInterceptor extends HandlerInterceptorAdapter {
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		
-		HandlerMethod handlerMethod = (HandlerMethod) handler;  
+		String clientLanguage = CookieTool.getCookieValue(BaseController.CLIENT_LANGUAGE, request);
+		if(clientLanguage == null || clientLanguage.isEmpty()) {
+			
+		}
 		
-		ServiceFunction function = handlerMethod.getBeanType().getAnnotation(ServiceFunction.class);
+		String language = CookieTool.getCookieValue("languageSetting", request);
 		
-		request.setAttribute(CookieName.HEADER, function.value().toString());
+//		if(language)
 		
 		return super.preHandle(request, response, handler);
 	}

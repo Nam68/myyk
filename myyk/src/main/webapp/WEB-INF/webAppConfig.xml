@@ -24,14 +24,47 @@
 	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 		<property name="maxUploadSize" value="10485760"></property> <!-- 최고용량 10MB -->
 	</bean>
+	
 		
-	<!-- APP -->
+	<!-- 다국어 설정 -->	
+	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="basenames">
+			<list>
+				<!-- 메세지 파일의 위치를 지정 -->
+				<value>/WEB-INF/messages/messages</value>
+			</list>
+		</property>
+		<!-- 파일의 기본 인코딩을 지정 -->
+		<property name="defaultEncoding" value="UTF-8" />
+		<!-- properties 파일이 변경되었는지 확인하는 주기를 지정. 60초 -->
+		<property name="cacheSeconds" value="60" />
+	</bean>
+	<!-- 언어 정보를 쿠키에 저장해서 사용 -->
+	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver" >
+	    <property name="cookieName" value="clientLanguage"/>
+	    <property name="cookieMaxAge" value="60*60*24*30)"/>
+	    <property name="cookiePath" value="/"/>
+	</bean>
+	
+	
+	<!-- 인터셉터 -->
 	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/**"/>
+			<bean id="localeChangeInterceptor" class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+				<property name="paramName" value="lang"></property>
+			</bean>
+		</mvc:interceptor>
 		<mvc:interceptor>
 			<mvc:mapping path="/**"/>
 			<bean id="serviceFunctionInterceptor" class="myyk.util.interceptor.ServiceFunctionInterceptor"/>
 		</mvc:interceptor>
+		<mvc:interceptor>
+			<mvc:mapping path="/**"/>
+			<bean id="languageSettingInterceptor" class="myyk.util.interceptor.LanguageSettingInterceptor"/>
+		</mvc:interceptor>
 	</mvc:interceptors>
+	
 		
 	<!-- View Resolver -->
 	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">

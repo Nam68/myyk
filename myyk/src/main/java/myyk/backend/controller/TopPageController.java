@@ -13,7 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import myyk.backend.BaseController;
-import myyk.util.CookieTool;
+import myyk.util.cookie.CookieName;
+import myyk.util.cookie.CookieTool;
 import myyk.util.annotation.ServiceFunction;
 import myyk.util.exception.SystemException;
 
@@ -38,7 +39,7 @@ public class TopPageController extends BaseController {
 		if(value == null || value.isEmpty()) {
 			throw new SystemException("property missing");
 		}
-		CookieTool.makeCookie(SKIP_TOP_PAGE, value, CookieTool.COOKIE_WEEK, response);
+		CookieTool.makeCookie(CookieName.SKIP_TOP_PAGE, value, CookieTool.COOKIE_WEEK, response);
 		return "/globalPage/homePage";
 	}
 	

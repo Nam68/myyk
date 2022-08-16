@@ -5,8 +5,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import myyk.backend.BaseController;
-import myyk.util.CookieTool;
+import myyk.util.cookie.CookieName;
+import myyk.util.cookie.CookieTool;
 
 public class SkipTopPageInterceptor extends HandlerInterceptorAdapter {
 
@@ -14,7 +14,7 @@ public class SkipTopPageInterceptor extends HandlerInterceptorAdapter {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		
-		String skip = CookieTool.getCookieValue(BaseController.SKIP_TOP_PAGE, request);
+		String skip = CookieTool.getCookieValue(CookieName.SKIP_TOP_PAGE, request);
 		
 		if("".equals(skip)) {
 			return true;
