@@ -4,15 +4,14 @@ import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 import myyk.backend.BaseController;
+import myyk.util.cookie.CookieName;
 import myyk.util.cookie.CookieTool;
 import myyk.util.annotation.ServiceFunction;
 import myyk.util.exception.SystemException;

@@ -2,6 +2,12 @@ package myyk.util.cookie;
 
 public class CookieName {
 
+
+	/**
+	 * <p>탑 페이지를 스킵할지 여부에 대해 가지고 있는 쿠키.</p>
+	 */
+	public static final String SKIP_TOP_PAGE = "skipTopPage";
+	
 	/**
 	 * <p>헤더에 있는 기능 중 어떤 기능에 속해있는지에 대한 정보를 가지고 있는 쿠키의 이름.</p>
 	 * <p>{@link ServiceFunction}에서 부여된 값이 {@link ServiceFunctionInterceptor}를 통해 자동으로 세팅된다.</p>
