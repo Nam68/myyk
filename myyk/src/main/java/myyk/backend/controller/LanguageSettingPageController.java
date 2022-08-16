@@ -29,6 +29,6 @@ public class LanguageSettingPageController extends BaseController {
 		}
 		
 		CookieTool.makeCookie(CookieName.APPOINTED_LANGUAGE, lang, CookieTool.COOKIE_MONTH_30, response);
-		return "redirect:/globalPage/topPage";
+		return "redirect:/globalPage/topPage.do";
 	}
 }
