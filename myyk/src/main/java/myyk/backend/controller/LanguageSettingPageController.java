@@ -9,6 +9,8 @@ import myyk.backend.BaseController;
 import myyk.util.annotation.ServiceFunction;
 import myyk.util.cookie.CookieName;
 import myyk.util.cookie.CookieTool;
+import myyk.util.enumeration.Languages;
+import myyk.util.exception.SystemException;
 
 @Controller
 @ServiceFunction
@@ -20,8 +22,13 @@ public class LanguageSettingPageController extends BaseController {
 	}
 
 	@RequestMapping("/globalPage/languageSetting.do")
-	public String execute(String lang, HttpServletResponse response) {
+	public String execute(String lang, HttpServletResponse response) throws SystemException {
+		
+		if(!Languages.exists(lang)) {
+			throw new SystemException("This Language is not available");
+		}
+		
 		CookieTool.makeCookie(CookieName.APPOINTED_LANGUAGE, lang, CookieTool.COOKIE_MONTH_30, response);
-		return "/globalPage/languageSetting";
+		return "redirect:/globalPage/topPage";
 	}
 }
