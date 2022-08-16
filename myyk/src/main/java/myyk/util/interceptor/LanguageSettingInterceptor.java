@@ -7,6 +7,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import myyk.util.cookie.CookieName;
 import myyk.util.cookie.CookieTool;
+
 import myyk.util.enumeration.Languages;
 import myyk.util.exception.SystemException;
 
@@ -15,6 +16,9 @@ import myyk.util.exception.SystemException;
  */
 public class LanguageSettingInterceptor extends HandlerInterceptorAdapter {
 
+	private static final String LANGUAGE_SETTING_PAGE = "/myyk/globalPage/languageSettingPage.do";
+	private static final String SET_LANGUAGE_PATH = "/myyk/globalPage/languageSetting.do";
+	
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
@@ -25,6 +29,12 @@ public class LanguageSettingInterceptor extends HandlerInterceptorAdapter {
 		//
 		String language = CookieTool.getCookieValue(CookieName.APPOINTED_LANGUAGE, request);
 		if(language == null || language.isEmpty()) {
+			if(request.getRequestURI().equals(LANGUAGE_SETTING_PAGE)) {
+				return true;
+			}
+			if(request.getRequestURI().equals(SET_LANGUAGE_PATH)) {
+				return true;
+			}
 			response.sendRedirect("/myyk/globalPage/languageSettingPage.do");
 			return false;
 		}
