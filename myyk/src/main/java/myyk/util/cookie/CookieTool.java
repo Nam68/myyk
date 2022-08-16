@@ -1,4 +1,4 @@
-package myyk.util;
+package myyk.util.cookie;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -183,3 +183,4 @@ public class CookieTool {
 	}
 	
 }
+
