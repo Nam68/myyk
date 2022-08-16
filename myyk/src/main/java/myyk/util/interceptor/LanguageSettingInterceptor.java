@@ -25,7 +25,7 @@ public class LanguageSettingInterceptor extends HandlerInterceptorAdapter {
 		//
 		String language = CookieTool.getCookieValue(CookieName.APPOINTED_LANGUAGE, request);
 		if(language == null || language.isEmpty()) {
-			response.sendRedirect("/globalPage/languageSettingPage.do");
+			response.sendRedirect("/myyk/globalPage/languageSettingPage.do");
 			return false;
 		}
 		
