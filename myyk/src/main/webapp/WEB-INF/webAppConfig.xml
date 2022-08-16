@@ -98,4 +98,5 @@
 		class="org.springframework.data.web.PageableHandlerMethodArgumentResolver">
 		<constructor-arg ref="sortResolver" />
 	</bean>
+
 </beans>
