@@ -49,15 +49,25 @@
 	
 	<!-- 인터셉터 -->
 	<mvc:interceptors>
+	
+		<!-- 다국어기능 인터셉터 -->
 		<mvc:interceptor>
 			<mvc:mapping path="/**"/>
 			<bean id="localeChangeInterceptor" class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
 				<property name="paramName" value="lang"></property>
 			</bean>
 		</mvc:interceptor>
+		
+		<!-- 어노테이션 인터셉터 -->
 		<mvc:interceptor>
 			<mvc:mapping path="/**"/>
 			<bean id="serviceFunctionInterceptor" class="myyk.util.interceptor.ServiceFunctionInterceptor"/>
+		</mvc:interceptor>
+		
+		<!-- 기타 기능 -->
+		<mvc:interceptor>
+			<mvc:mapping path="/globalPage/topPage.do"/>
+			<bean id="skipTopPageInterceptor" class="myyk.util.interceptor.SkipTopPageInterceptor"/>
 		</mvc:interceptor>
 		<mvc:interceptor>
 			<mvc:mapping path="/**"/>

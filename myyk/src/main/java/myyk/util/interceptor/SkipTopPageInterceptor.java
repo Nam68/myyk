@@ -22,6 +22,8 @@ public class SkipTopPageInterceptor extends HandlerInterceptorAdapter {
 			response.sendRedirect(request.getContextPath() + "/homePage.do");
 		}
 		
+		System.out.println("/globalPage/topPage.do");
+		
 		return false;
 	}
 	
