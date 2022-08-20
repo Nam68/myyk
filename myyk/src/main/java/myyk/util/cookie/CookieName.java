@@ -18,7 +18,7 @@ public class CookieName {
 	 * <p>현재 클라이언트에 지정되어 있는 언어 정보를 가지고 있는 쿠키의 이름.</p>
 	 * <p>시스템에 의해 생성된다.</p>
 	 */
-	public static final String CLIENT_LANGUAGE = "client_language";
+	public static final String CLIENT_LANGUAGE = "clientLanguage";
 	
 	/**
 	 * <p>사용자가 직접 지정한 언어 정보를 가지고 있는 쿠키의 이름.</p>

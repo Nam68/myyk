@@ -4,6 +4,8 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import myyk.util.exception.SystemException;
+
 /**
  * <p>쿠키 관련 기능을 일괄적으로 제공</p>
  */
@@ -128,6 +130,22 @@ public class CookieTool {
 		response.addCookie(cookie);
 	}
 	
+	public static void modifyCookie(String name, String value, HttpServletRequest request, HttpServletResponse response) 
+			throws SystemException {
+		
+		Cookie cookie = getCookie(name, request);
+		
+		if(cookie == null) {
+			throw new SystemException("Missing Cookie");
+		}
+		
+		cookie.setValue(value);
+		cookie.setMaxAge(cookie.getMaxAge());
+		cookie.setPath(cookie.getPath());
+		
+		response.addCookie(cookie);
+	}
+	
 	/**
 	 * <p>쿠키를 삭제한다.</p>
 	 * 
@@ -140,7 +158,7 @@ public class CookieTool {
 		
 		for(Cookie cookie : cookies) {
 			if(cookie.getName().equals(name)) {
-				cookie.setMaxAge(-1);
+				cookie.setMaxAge(0);
 			}
 		}
 	}
@@ -177,13 +195,28 @@ public class CookieTool {
 		
 		for(Cookie cookie : cookies) {
 			if(cookie.getName().equals(name)) {
-				if(cookie.getMaxAge() > 0) {
+				if(cookie.getMaxAge() != 0) {
 					return cookie.getValue();
 				}
 			}
 		}
 		
 		return "";
+	}
+	
+	private static Cookie getCookie(String name, HttpServletRequest request) {
+		
+		Cookie[] cookies = request.getCookies();
+		
+		for(Cookie cookie : cookies) {
+			if(cookie.getName().equals(name)) {
+				if(cookie.getMaxAge() != 0) {
+					return cookie;
+				}
+			}
+		}
+		
+		return null;
 	}
 	
 }
