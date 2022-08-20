@@ -44,32 +44,24 @@ public class LanguageSettingInterceptor extends HandlerInterceptorAdapter {
 		}
 		
 		//
-		// 시스템에서 생성되는 클라이언트 언어 정보 쿠키가 없는 경우 새롭게 생성
+		// 시스템에서 생성되는 클라이언트 언어 정보 쿠키가 없는 경우 설정 화면으로 이동
 		//
 		String clientLanguage = CookieTool.getCookieValue(CookieName.CLIENT_LANGUAGE, request);
 		
 		if(clientLanguage == null || clientLanguage.isEmpty()) {
-			
-			CookieTool.makeCookie(
-					CookieName.CLIENT_LANGUAGE, 
-					language, 
-					CookieTool.COOKIE_MONTH_30, 
-					response);
+			response.sendRedirect("/myyk/globalPage/languageSettingPage.do");
+			return false;
 		}
-		
-		System.out.println(clientLanguage);
-		System.out.println(clientLanguage);
 		
 		//
 		// 쿠키 정보 동기화
 		// 
 		//
 		if(!clientLanguage.equals(language)) {
-			
 			CookieTool.modifyCookie(CookieName.APPOINTED_LANGUAGE, clientLanguage, request, response);
 		}
 		
-		return super.preHandle(request, response, handler);
+		return true;
 	}
 	
 }

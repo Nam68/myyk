@@ -158,7 +158,7 @@ public class CookieTool {
 		
 		for(Cookie cookie : cookies) {
 			if(cookie.getName().equals(name)) {
-				cookie.setMaxAge(-1);
+				cookie.setMaxAge(0);
 			}
 		}
 	}
@@ -195,7 +195,7 @@ public class CookieTool {
 		
 		for(Cookie cookie : cookies) {
 			if(cookie.getName().equals(name)) {
-				if(cookie.getMaxAge() > 0) {
+				if(cookie.getMaxAge() != 0) {
 					return cookie.getValue();
 				}
 			}
@@ -210,7 +210,7 @@ public class CookieTool {
 		
 		for(Cookie cookie : cookies) {
 			if(cookie.getName().equals(name)) {
-				if(cookie.getMaxAge() > 0) {
+				if(cookie.getMaxAge() != 0) {
 					return cookie;
 				}
 			}

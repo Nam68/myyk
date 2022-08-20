@@ -9,6 +9,6 @@
 </head>
 <body>
 <a href="/myyk/globalPage/languageSetting.do?lang=ko">한국어</a><br>
-<a href="/myyk/globalPage/languageSetting.do?lang=jp">日本語</a>
+<a href="/myyk/globalPage/languageSetting.do?lang=ja">日本語</a>
 </body>
 </html>

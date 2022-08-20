@@ -4,7 +4,7 @@ public enum Languages {
 
 	KOREAN("ko"),
 	
-	JAPANES("jp"),
+	JAPANES("ja"),
 	
 	DEFAULT(Languages.KOREAN.getLangugage())
 	;

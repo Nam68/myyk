@@ -17,7 +17,8 @@ import myyk.util.exception.SystemException;
 public class LanguageSettingPageController extends BaseController {
 
 	@RequestMapping("/globalPage/languageSettingPage.do")
-	public String show() {
+	public String show(HttpServletResponse response) {
+		CookieTool.makeCookie(CookieName.APPOINTED_LANGUAGE, "ko", CookieTool.COOKIE_MONTH_30, response);
 		return "/globalPage/languageSetting";
 	}
 
