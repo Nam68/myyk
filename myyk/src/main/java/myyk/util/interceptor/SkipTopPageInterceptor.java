@@ -19,10 +19,8 @@ public class SkipTopPageInterceptor extends HandlerInterceptorAdapter {
 		if("".equals(skip)) {
 			return true;
 		} else {
-			response.sendRedirect(request.getContextPath() + "/homePage.do");
+			response.sendRedirect("/myyk/globalPage/homePage.do");
 		}
-		
-		System.out.println("/globalPage/topPage.do");
 		
 		return false;
 	}

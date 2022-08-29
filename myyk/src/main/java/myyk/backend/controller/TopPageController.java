@@ -38,7 +38,7 @@ public class TopPageController extends BaseController {
 			throw new SystemException("property missing");
 		}
 		CookieTool.makeCookie(CookieName.SKIP_TOP_PAGE, value, CookieTool.COOKIE_WEEK, response);
-		return "/globalPage/homePage";
+		return "redirect:/globalPage/homePage.do";
 	}
 	
 }
