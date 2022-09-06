@@ -63,6 +63,10 @@
 			<mvc:mapping path="/**"/>
 			<bean id="serviceFunctionInterceptor" class="myyk.util.interceptor.ServiceFunctionInterceptor"/>
 		</mvc:interceptor>
+		<mvc:interceptor>
+			<mvc:mapping path="/**"/>
+			<bean id="setEnumsInterceptor" class="myyk.util.interceptor.SetEnumsInterceptor"/>
+		</mvc:interceptor>
 		
 		<!-- 기타 기능 -->
 		<mvc:interceptor>
