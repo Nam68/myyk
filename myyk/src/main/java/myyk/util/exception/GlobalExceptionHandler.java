@@ -1,15 +1,12 @@
 package myyk.util.exception;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
 
-import myyk.backend.BaseController;
+import myyk.backend.controller.BaseController;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
