@@ -63,7 +63,7 @@
 	</bean>
 	
 	<!-- Spring Data JPA -->
-	<jpa:repositories base-package="myyk.app.repository"/>
+	<jpa:repositories base-package="myyk.backend.repository"/>
 	
 	<!-- MyApp -->
 
