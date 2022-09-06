@@ -16,8 +16,6 @@ public @interface ServiceFunction {
 	
 	/**
 	 * <p>해당 기능의 카테고리를 {@link ServiceFunction}을 통해 설정한다.</p>
-	 * 
-	 * @return ServiceFunction
 	 */
 	ServiceCategory value() default ServiceCategory.HOME;
 	
