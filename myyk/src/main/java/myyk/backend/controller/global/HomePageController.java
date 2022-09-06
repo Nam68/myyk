@@ -1,9 +1,9 @@
-package myyk.backend.controller;
+package myyk.backend.controller.global;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import myyk.backend.BaseController;
+import myyk.backend.controller.BaseController;
 import myyk.util.annotation.ServiceFunction;
 
 @Controller
