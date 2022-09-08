@@ -33,15 +33,15 @@ public class MemberEntity extends BaseApp {
 	@Column(name = "MEMBER_IDX")
 	private Long idx;
 	
-	@NaturalId
-	@Column(name = "MEMBER_ID")
-	private String id;
-	
 	@Column(name = "PASSWORD")
 	private String password;
 	
 	@Column(name = "PASSWORD_SALT")
 	private String passwordSalt;
+	
+	@NaturalId
+	@Column(name = "EMAIL")
+	private String email;
 	
 	@Column(name = "UPPER_EMAIL")
 	private String upperEmail;
@@ -76,15 +76,14 @@ public class MemberEntity extends BaseApp {
 	 * @throws SystemException 시스템 예외
 	 */
 	public MemberEntity(
-			String id, 
 			String password, 
-			String email,
+			String upperEmail,
+			String lowerEmail,
 			String nickname,
 			Region region) throws SystemException {
 		
-		this.id = id;
 		generatePassword(password);
-		setEmail(email);
+		setEmail(upperEmail, lowerEmail);
 		this.nickname = nickname;
 		this.region = region;
 		this.memberType = MemberType.TMP_MEMBER;
@@ -97,15 +96,6 @@ public class MemberEntity extends BaseApp {
 	 */
 	public Optional<Long> getIdx() {
 		return Optional.of(idx);
-	}
-	
-	/**
-	 * <p>id를 반환한다.</p>
-	 * 
-	 * @return id
-	 */
-	public Optional<String> getId() {
-		return Optional.of(id);
 	}
 	
 	/**
@@ -171,10 +161,10 @@ public class MemberEntity extends BaseApp {
 	 * @param email 이메일
 	 * @throws SystemException 시스템 예외
 	 */
-	public void setEmail(String email) throws SystemException {
-		String[] splitedEmail = email.split("@");
-		this.upperEmail = encrypt(splitedEmail[0]);
-		this.lowerEmail = splitedEmail[1];
+	public void setEmail(String upperEmail, String lowerEmail) throws SystemException {
+		this.upperEmail = encrypt(upperEmail);
+		this.lowerEmail = lowerEmail;
+		this.email = encrypt(upperEmail + "@" + lowerEmail);
 	}
 	
 	/**
