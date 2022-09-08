@@ -169,4 +169,106 @@ public class BaseApp {
 		}
 		return sb.toString();
 	}
+	
+	/**
+	 * <p>문자열을 카멜형식으로 변환한다.</p>
+	 * 
+	 * @param target 문자열
+	 * @return 카멜 형식 문자열
+	 */
+	public static String toCamelCase(String target) throws SystemException {
+		
+		if(target == null || target.isEmpty()) {
+			throw new SystemException("string can not convert");
+		}
+		
+		char[] cList = target.toCharArray();
+		
+		switch(cList[0]) {
+			case'A':
+				cList[0] = 'a';
+				break;
+			case'B':
+				cList[0] = 'b';
+				break;
+			case'C':
+				cList[0] = 'c';
+				break;
+			case'D':
+				cList[0] = 'd';
+				break;
+			case'E':
+				cList[0] = 'e';
+				break;
+			case'F':
+				cList[0] = 'f';
+				break;
+			case'G':
+				cList[0] = 'g';
+				break;
+			case'H':
+				cList[0] = 'h';
+				break;
+			case'I':
+				cList[0] = 'i';
+				break;
+			case'J':
+				cList[0] = 'j';
+				break;
+			case'K':
+				cList[0] = 'k';
+				break;
+			case'L':
+				cList[0] = 'l';
+				break;
+			case'M':
+				cList[0] = 'm';
+				break;
+			case'N':
+				cList[0] = 'n';
+				break;
+			case'O':
+				cList[0] = 'o';
+				break;
+			case'P':
+				cList[0] = 'p';
+				break;
+			case'Q':
+				cList[0] = 'q';
+				break;
+			case'R':
+				cList[0] = 'r';
+				break;
+			case'S':
+				cList[0] = 's';
+				break;
+			case'T':
+				cList[0] = 't';
+				break;
+			case'U':
+				cList[0] = 'u';
+				break;
+			case'V':
+				cList[0] = 'v';
+				break;
+			case'W':
+				cList[0] = 'w';
+				break;
+			case'X':
+				cList[0] = 'x';
+				break;
+			case'Y':
+				cList[0] = 'y';
+				break;
+			case'Z':
+				cList[0] = 'z';
+		}
+		
+		StringBuffer sb = new StringBuffer();
+		for(char c : cList) {
+			sb.append(c);
+		}
+		
+		return sb.toString();
+	}
 }
