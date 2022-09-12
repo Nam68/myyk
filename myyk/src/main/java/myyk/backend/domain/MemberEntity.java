@@ -1,10 +1,12 @@
-package myyk.backend.entity.member;
+package myyk.backend.domain;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -26,7 +28,7 @@ import myyk.util.exception.SystemException;
  */
 @Entity
 @Table(name = "MEMBER_TBL")
-public class MemberEntity extends BaseApp {
+public class MemberEntity extends BaseEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -53,49 +55,38 @@ public class MemberEntity extends BaseApp {
 	private String nickname;
 	
 	@Column(name = "REGION")
+	@Enumerated(EnumType.STRING)
 	private Region region;
 	
 	@Column(name = "MEMBER_TYPE")
+	@Enumerated(EnumType.STRING)
 	private MemberType memberType;
-	
-	@Temporal(TemporalType.TIMESTAMP)
-	@CreatedDate
-	private LocalDateTime registeredDate;
-	
-	@Temporal(TemporalType.TIMESTAMP)
-	@LastModifiedDate
-	private LocalDateTime modifiedDate;
 
-	/**
-	 * <p>회원 엔티티를 구축한다.</p>
-	 * 
-	 * @param id 아이디
-	 * @param password 비밀번호
-	 * @param email 이메일
-	 * @param region 지역
-	 * @throws SystemException 시스템 예외
-	 */
+	@Deprecated
+	protected MemberEntity() {
+		// TODO Auto-generated constructor stub
+	}
+	
 	public MemberEntity(
-			String password, 
-			String upperEmail,
-			String lowerEmail,
-			String nickname,
+			String password,
+			String upperEmail, 
+			String lowerEmail, 
+			String nickname, 
 			Region region) throws SystemException {
-		
 		generatePassword(password);
 		setEmail(upperEmail, lowerEmail);
 		this.nickname = nickname;
 		this.region = region;
 		this.memberType = MemberType.TMP_MEMBER;
 	}
-	
+
 	/**
 	 * <p>idx를 반환한다.</p>
 	 * 
 	 * @return idx
 	 */
-	public Optional<Long> getIdx() {
-		return Optional.of(idx);
+	public Long getIdx() {
+		return idx;
 	}
 	
 	/**
@@ -105,8 +96,7 @@ public class MemberEntity extends BaseApp {
 	 * @throws SystemException 시스템 예외
 	 */
 	public Optional<String> getEmail() throws SystemException {
-		String email = decrypt(upperEmail) + "@" + lowerEmail;
-		return Optional.of(email);
+		return Optional.of(decrypt(email));
 	}
 	
 	/**
@@ -135,24 +125,6 @@ public class MemberEntity extends BaseApp {
 	 */
 	public Optional<MemberType> getMemberType() {
 		return Optional.of(memberType);
-	}
-	
-	/**
-	 * <p>등록시각을 반환한다.</p>
-	 * 
-	 * @return 등록시각
-	 */
-	public LocalDateTime getRegisterdDate() {
-		return registeredDate;
-	}
-	
-	/**
-	 * <p>갱신시각을 반환한다.</p>
-	 * 
-	 * @return 갱신시각
-	 */
-	public LocalDateTime getModifiedDate() {
-		return modifiedDate;
 	}
 	
 	/**
@@ -195,9 +167,9 @@ public class MemberEntity extends BaseApp {
 	}
 	
 	// 솔트를 생성해서 비밀번호를 설정한다.
-	private void generatePassword(String password) 
-			throws SystemException {
+	private void generatePassword(String password) throws SystemException {
 		this.passwordSalt = createSalt();
 		this.password = doHashing(password, passwordSalt);
 	}
 }
+
