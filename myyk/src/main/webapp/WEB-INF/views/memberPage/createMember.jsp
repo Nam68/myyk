@@ -26,8 +26,8 @@ createMember<br>
 <br>
 <spring:message code="message.memberPage.createMember.region" /><br>
 <select name="region">
-	<c:forEach var="test" items="${enums.region }">
-	<option value="${test.name }"><spring:message code="message.enum.region.${test.value }" /></option>
+	<c:forEach var="r" items="${enums.region }">
+	<option value="${r.name }"><spring:message code="message.enum.region.${r.value }" /></option>
 	</c:forEach>
 </select>
 <br>
