@@ -1,12 +1,13 @@
 package myyk.backend.controller.member;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import myyk.backend.controller.BaseController;
 import myyk.backend.dto.member.CreateMemberInputDto;
-import myyk.backend.entity.member.MemberEntity;
+import myyk.backend.service.MemberService;
 import myyk.util.annotation.ServiceFunction;
 import myyk.util.annotation.SetEnums;
 import myyk.util.enumeration.Region;
@@ -18,6 +19,9 @@ import myyk.util.exception.SystemException;
 @RequestMapping("/memberPage")
 public class CreateMemberController extends BaseController {
 
+	@Autowired
+	private MemberService service;
+	
 	@RequestMapping("/createMemberInput.do")
 	@SetEnums(values = {Region.class})
 	public String input() {
@@ -26,15 +30,7 @@ public class CreateMemberController extends BaseController {
 	
 	@RequestMapping(path = "/createMember.do", method = RequestMethod.POST)
 	public String execute(CreateMemberInputDto memberDto) throws SystemException {
-		
-		MemberEntity member = new MemberEntity(
-				memberDto.getPassword(),
-				memberDto.getUpperEmail(),
-				memberDto.getLowerEmail(),
-				memberDto.getNickname(),
-				memberDto.getRegion()
-				);
-		
+		service.create(memberDto);
 		return "redirect:/globalPage/homePage.do";
 	}
 	

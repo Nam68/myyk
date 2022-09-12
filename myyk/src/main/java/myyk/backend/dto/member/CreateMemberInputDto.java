@@ -7,13 +7,13 @@ import myyk.util.enumeration.Region;
  */
 public class CreateMemberInputDto {
 
-	private String password;
+	private String password = "";
 	
-	private String nickname;
+	private String nickname = "";
 	
-	private String upperEmail;
+	private String upperEmail = "";
 	
-	private String lowerEmail;
+	private String lowerEmail = "";
 	
 	private Region region;
 
