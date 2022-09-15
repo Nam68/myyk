@@ -5,7 +5,7 @@ import myyk.util.enumeration.Region;
 /**
  * <p>회원가입 입력창에 대한 DTO.</p>
  */
-public class CreateMemberInputDto {
+public class CreateMemberDto {
 
 	private String password = "";
 	

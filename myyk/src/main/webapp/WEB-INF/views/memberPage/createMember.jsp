@@ -8,12 +8,14 @@
 <meta charset="UTF-8">
 <title><spring:message code="message.memberPage.createMember.title" /></title>
 </head>
+<%@ include file="/WEB-INF/views/header.jsp" %>
 <body>
 createMember<br>
 <form action="/myyk/memberPage/createMember.do" method="post">
 <spring:message code="message.memberPage.createMember.email" /><br>
 <input name="upperEmail" type="text">@
 <input name="lowerEmail" type="text">
+<button id="checkDuplicationMailBtn">dddd</button>
 <br>
 <spring:message code="message.memberPage.createMember.password" /><br>
 <input name="password" type="password">
@@ -33,5 +35,8 @@ createMember<br>
 <br>
 <button type="submit">ok</button>
 </form>
+<script>
+	
+</script>
 </body>
 </html>

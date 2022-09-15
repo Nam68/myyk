@@ -8,4 +8,6 @@ import myyk.backend.domain.MemberEntity;
 @Repository
 public interface MemberRepository extends JpaRepository<MemberEntity, Long> {
 
+	MemberEntity findByEmail(String email);
+	
 }

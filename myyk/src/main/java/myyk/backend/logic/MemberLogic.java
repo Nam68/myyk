@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import myyk.backend.dto.member.CreateMemberInputDto;
+import myyk.backend.dto.member.CreateMemberDto;
 import myyk.backend.repository.MemberRepository;
 import myyk.backend.domain.MemberEntity;
 import myyk.backend.service.MemberService;
@@ -15,14 +15,14 @@ import myyk.util.exception.SystemException;
 @Service
 @EnableJpaAuditing
 @Transactional(readOnly = true)
-public class MemberLogic implements MemberService {
+public class MemberLogic extends BaseLogic implements MemberService {
 
 	@Autowired
 	private MemberRepository memberRepository;
 	
 	@Transactional
 	@Override
-	public Result create(CreateMemberInputDto memberDto) throws SystemException {
+	public Result create(CreateMemberDto memberDto) throws SystemException {
 		
 		MemberEntity memberEntity = new MemberEntity(
 				memberDto.getPassword(),

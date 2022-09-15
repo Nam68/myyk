@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import myyk.backend.controller.BaseController;
-import myyk.backend.dto.member.CreateMemberInputDto;
+import myyk.backend.dto.member.CreateMemberDto;
 import myyk.backend.service.MemberService;
 import myyk.util.annotation.ServiceFunction;
 import myyk.util.annotation.SetEnums;
@@ -29,7 +29,7 @@ public class CreateMemberController extends BaseController {
 	}
 	
 	@RequestMapping(path = "/createMember.do", method = RequestMethod.POST)
-	public String execute(CreateMemberInputDto memberDto) throws SystemException {
+	public String execute(CreateMemberDto memberDto) throws SystemException {
 		service.create(memberDto);
 		return "redirect:/globalPage/homePage.do";
 	}
