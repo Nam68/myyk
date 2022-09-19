@@ -11,5 +11,7 @@ public enum ServiceCategory {
 	WISH_PLACE, 
 	MAP,
 	REQUEST, 
+	
+	MEMBER,
 	;
 }
