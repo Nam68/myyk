@@ -1,0 +1,20 @@
+@charset "UTF-8";
+
+header{
+	background-color: #fff;
+	z-index: 100005;
+	padding: 2%;
+}
+
+.bi {
+	width: 2rem;
+	height: 2rem;
+  	vertical-align: -.125em;
+  	fill: currentColor;
+}
+
+@media (pointer:coarse) {
+	#login-btn-div{
+   		margin: 0 0 0 auto;
+	}
+}

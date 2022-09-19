@@ -6,8 +6,10 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
+<%@ include file="/WEB-INF/views/header.jsp" %>
 <body>
 home<br>
 <a href="">login</a>
 </body>
+<%@ include file="/WEB-INF/views/footer.jsp" %>
 </html>
