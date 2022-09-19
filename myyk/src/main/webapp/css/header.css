@@ -1,9 +1,16 @@
 @charset "UTF-8";
 
 header{
+	display:flex;
+	flex-wrap:wrap;
 	background-color: #fff;
 	z-index: 100005;
 	padding: 2%;
+	border-bottom: 0.3rem solid var(--primary-color-300);
+}
+
+.selected-header{
+	box-shadow:0 0 0 .25rem rgba(13,110,253,.5);
 }
 
 .bi {
@@ -16,5 +23,16 @@ header{
 @media (pointer:coarse) {
 	#login-btn-div{
    		margin: 0 0 0 auto;
+	}
+	header {
+		display:inline-block;
+		flex-wrap:nowrap;
+		text-align: center;
+	}
+	header > a {
+		margin: auto;
+	}
+	header > .nav {
+		margin: auto;
 	}
 }

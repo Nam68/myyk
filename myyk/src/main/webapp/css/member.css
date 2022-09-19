@@ -1,0 +1,12 @@
+@charset "UTF-8";
+
+#check-email-btn{
+	width: 65%;
+	font-size: 1.2rem;
+}
+
+@media (pointer:fine) {
+	.d-grid > button {
+		color:red;
+	}
+}
