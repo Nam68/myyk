@@ -7,9 +7,9 @@ package myyk.util.enumeration;
 public enum ServiceCategory {
 
 	HOME, 
-	ALBUM, 
-	TRIP, 
+	MEMORY, 
+	WISH_PLACE, 
+	MAP,
 	REQUEST, 
-	MEMBER,
 	;
 }
