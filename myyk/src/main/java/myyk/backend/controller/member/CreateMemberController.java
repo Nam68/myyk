@@ -1,6 +1,5 @@
 package myyk.backend.controller.member;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -8,12 +7,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import myyk.backend.controller.BaseController;
 import myyk.backend.dto.member.CreateMemberDto;
-import myyk.backend.service.MemberService;
 import myyk.util.annotation.ServiceFunction;
 import myyk.util.annotation.SetEnums;
 import myyk.util.enumeration.Region;
 import myyk.util.enumeration.ServiceCategory;
 import myyk.util.exception.SystemException;
+import myyk.util.mail.MailSenderFactory;
 
 @Controller
 @ServiceFunction(ServiceCategory.MEMBER)
@@ -34,8 +33,20 @@ public class CreateMemberController extends BaseController {
 	
 	@RequestMapping(path = "/checkEmailDuplication.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String checkEmail(CreateMemberDto memberDto) throws SystemException {
+	public String checkEmailDuplication(CreateMemberDto memberDto) throws SystemException {
 		return getLogicManager().getMemberService().checkEmail(memberDto).toString();
+	}
+	
+	@RequestMapping(path = "/checkEmailExists.do", method = RequestMethod.POST)
+	@ResponseBody
+	public String checkEmailExists(CreateMemberDto memberDto) throws SystemException {
+		return MailSenderFactory.getMailSender()
+			.setTo("epoche02@naver.com")
+			.setSubject("test")
+			.setContent("hi")
+			.send().toString();
+		
+		// 이메일 확인 추가
 	}
 	
 }
