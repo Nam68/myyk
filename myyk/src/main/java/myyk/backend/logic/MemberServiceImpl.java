@@ -15,10 +15,7 @@ import myyk.util.exception.SystemException;
 @Service
 @EnableJpaAuditing
 @Transactional(readOnly = true)
-public class MemberLogic extends BaseLogic implements MemberService {
-
-	@Autowired
-	private MemberRepository memberRepository;
+public class MemberServiceImpl extends BaseLogic implements MemberService {
 	
 	@Transactional
 	@Override
@@ -32,7 +29,7 @@ public class MemberLogic extends BaseLogic implements MemberService {
 				memberDto.getRegion()
 				);
 		
-		memberRepository.saveAndFlush(memberEntity);
+		getRepositoryManager().getMemberRepository().saveAndFlush(memberEntity);
 		
 		return null;
 	}
@@ -41,7 +38,7 @@ public class MemberLogic extends BaseLogic implements MemberService {
 	public Result checkEmail(CreateMemberDto memberDto) throws SystemException {
 		
 		String email = getEncryptedEmail(memberDto.getUpperEmail(), memberDto.getLowerEmail());
-		MemberEntity member = memberRepository.findByEmail(email);
+		MemberEntity member = getRepositoryManager().getMemberRepository().findByEmail(email);
 		
 		if(member != null) {
 			return Result.ERROR;

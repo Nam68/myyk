@@ -19,9 +19,6 @@ import myyk.util.exception.SystemException;
 @ServiceFunction(ServiceCategory.MEMBER)
 @RequestMapping("/memberPage")
 public class CreateMemberController extends BaseController {
-
-	@Autowired
-	private MemberService service;
 	
 	@RequestMapping("/createMemberInput.do")
 	@SetEnums(values = {Region.class})
@@ -31,14 +28,14 @@ public class CreateMemberController extends BaseController {
 	
 	@RequestMapping(path = "/createMember.do", method = RequestMethod.POST)
 	public String execute(CreateMemberDto memberDto) throws SystemException {
-		service.create(memberDto);
+		getLogicManager().getMemberService().create(memberDto);
 		return "redirect:/globalPage/homePage.do";
 	}
 	
 	@RequestMapping(path = "/checkEmailDuplication.do", method = RequestMethod.POST)
 	@ResponseBody
 	public String checkEmail(CreateMemberDto memberDto) throws SystemException {
-		return service.checkEmail(memberDto).toString();
+		return getLogicManager().getMemberService().checkEmail(memberDto).toString();
 	}
 	
 }

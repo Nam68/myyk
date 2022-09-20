@@ -1,10 +1,16 @@
 package myyk.backend.logic;
 
+import myyk.backend.repository.RepositoryManager;
 import myyk.util.BaseApp;
 import myyk.util.exception.SystemException;
 
 public class BaseLogic extends BaseApp {
-
+	
+	private RepositoryManager repositoryManager;
+	
+	protected RepositoryManager getRepositoryManager() {
+		return repositoryManager;
+	}
 	
 	/**
 	 * <p>완성된 이메일을 반환한다.</p>
