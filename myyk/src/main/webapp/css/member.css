@@ -5,8 +5,21 @@
 	font-size: 1.2rem;
 }
 
+.ok-btn-div {
+	display:grid;
+	gap:.5rem;
+}
+
 @media (pointer:fine) {
-	.d-grid > button {
-		color:red;
+	.content-body {
+		width: 70%;
+		margin: auto;
+	}
+	.ok-btn-div > button {
+		width: 15%;
+	}
+	.ok-btn-div {
+		display:flex!important;
+		justify-content:center!important;
 	}
 }

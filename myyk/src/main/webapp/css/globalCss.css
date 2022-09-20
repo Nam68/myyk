@@ -25,7 +25,25 @@ body {
 	}
 }
 
-form{
+/*
+	loading spinner
+*/
+.loading-spinner {
+	z-index: 100006;
+  	position:fixed;         
+  	top:0;
+  	left:0;
+  	right:0;
+  	bottom:0;       
+  	padding:15px; 
+  	justify-content:center;
+  	align-items:center;
+ 	display:none;
+}
+
+
+
+form {
 	text-align: left;
 }
 
