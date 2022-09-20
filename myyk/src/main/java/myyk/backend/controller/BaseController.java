@@ -1,11 +1,14 @@
 package myyk.backend.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import myyk.backend.logic.LogicManager;
 import myyk.util.BaseApp;
 
 public class BaseController extends BaseApp {
 
-private LogicManager logicManager;
+	@Autowired
+	private LogicManager logicManager;
 	
 	protected LogicManager getLogicManager() {
 		return logicManager;
