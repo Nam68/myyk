@@ -2,33 +2,45 @@ package myyk.util.mail;
 
 import java.util.Properties;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.internet.MimeMessage;
 
-@Configuration
+
 public class MailConfig {
 	
-	@Bean
-	public JavaMailSender getMailSender() {
-		
-		JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
-		
-		mailSender.setHost("smtp.gmail.com");
-		mailSender.setPort(587);
-		mailSender.setUsername("");
-		mailSender.setPassword("");
-		
-		Properties javaMailProperties = new Properties();
-		
-		javaMailProperties.put("mail.smtp.starttls.enable", "true");
-		javaMailProperties.put("mail.smtp.auth", "true");
-		javaMailProperties.put("mail.transport.protocol", "smtp");
-		javaMailProperties.put("mail.debug", "true");
-		
-		mailSender.setJavaMailProperties(javaMailProperties);
-		
-		return mailSender;
+	// 1. 발신자의 메일 계정과 비밀번호 설정
+	private static final String USER = "myyk.system@outlook.com";
+    private static final String PASSWORD = "";
+	
+	public static MimeMessage getMailConfig() {
+		        
+        // 2. Property에 SMTP 서버 정보 설정
+		Properties prop = new Properties();
+
+		prop.put("mail.smtp.ssl.protocols", "TLSv1.2");
+		prop.put("mail.smtp.host", "smtp-mail.outlook.com");
+		prop.put("mail.smtp.port", 587);
+		prop.put("mail.smtp.starttls.enable","true");
+		prop.put("mail.smtp.auth", "true");
+
+//		prop.put("mail.smtp.host", "smtp.gmail.com");
+//	    prop.put("mail.smtp.port", 465);
+//	    prop.put("mail.smtp.auth", "true");
+//	    prop.put("mail.smtp.ssl.enable", "true");
+//	    prop.put("mail.smtp.ssl.trust", "smtp.gmail.com");
+
+		// 3. SMTP 서버정보와 사용자 정보를 기반으로 Session 클래스의 인스턴스 생성
+        Session session = Session.getDefaultInstance(prop, new javax.mail.Authenticator() {
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(USER, PASSWORD);
+            }
+        });
+		        
+        return new MimeMessage(session);
+	}
+	
+	public static String getSender() {
+		return USER;
 	}
 }
