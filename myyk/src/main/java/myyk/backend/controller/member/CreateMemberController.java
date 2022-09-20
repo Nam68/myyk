@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import myyk.backend.controller.BaseController;
 import myyk.backend.dto.member.CreateMemberDto;
@@ -32,6 +33,12 @@ public class CreateMemberController extends BaseController {
 	public String execute(CreateMemberDto memberDto) throws SystemException {
 		service.create(memberDto);
 		return "redirect:/globalPage/homePage.do";
+	}
+	
+	@RequestMapping(path = "/checkEmailDuplication.do", method = RequestMethod.POST)
+	@ResponseBody
+	public String checkEmail(CreateMemberDto memberDto) throws SystemException {
+		return service.checkEmail(memberDto).toString();
 	}
 	
 }

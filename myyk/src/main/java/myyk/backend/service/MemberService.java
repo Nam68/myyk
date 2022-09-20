@@ -8,4 +8,6 @@ public interface MemberService {
 
 	Result create(CreateMemberDto memberDto) throws SystemException;
 	
+	Result checkEmail(CreateMemberDto memberDto) throws SystemException;
+	
 }

@@ -37,6 +37,17 @@ public class MemberLogic extends BaseLogic implements MemberService {
 		return null;
 	}
 
+	@Override
+	public Result checkEmail(CreateMemberDto memberDto) throws SystemException {
+		
+		String email = getEncryptedEmail(memberDto.getUpperEmail(), memberDto.getLowerEmail());
+		MemberEntity member = memberRepository.findByEmail(email);
+		
+		if(member != null) {
+			return Result.ERROR;
+		}
+		return Result.SUCCESS;
+	}
 	
 
 }
