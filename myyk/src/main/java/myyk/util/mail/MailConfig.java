@@ -11,7 +11,7 @@ public class MailConfig {
 	
 	// 1. 발신자의 메일 계정과 비밀번호 설정
 	private static final String USER = "myyk.system@outlook.com";
-    private static final String PASSWORD = "";
+    private static final String PASSWORD = "Tractatus1@";
 	
 	public static MimeMessage getMailConfig() {
 		        

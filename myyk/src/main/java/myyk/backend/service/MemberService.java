@@ -6,8 +6,8 @@ import myyk.util.exception.SystemException;
 
 public interface MemberService {
 
-	Result create(CreateMemberDto memberDto) throws SystemException;
+	Result create(CreateMemberDto dto) throws SystemException;
 	
-	Result checkEmail(CreateMemberDto memberDto) throws SystemException;
+	Result checkEmail(CreateMemberDto dto) throws SystemException;
 	
 }

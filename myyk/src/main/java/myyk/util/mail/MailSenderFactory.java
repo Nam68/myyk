@@ -6,6 +6,8 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import org.springframework.http.MediaType;
+
 import myyk.util.enumeration.Result;
 
 public class MailSenderFactory {
@@ -30,6 +32,8 @@ public class MailSenderFactory {
 		
 		private String content;
 		
+		private boolean isHtml;
+		
 		private MimeMessage config;
 		
 		private String sender;
@@ -37,6 +41,12 @@ public class MailSenderFactory {
 		public MailSender(MimeMessage config, String sender) {
 			this.config = config;
 			this.sender = sender;
+			this.isHtml = false;
+		}
+		
+		public MailSender setFrom(String from) {
+			this.from = from;
+			return this;
 		}
 		
 		public MailSender setTo(String to) {
@@ -54,12 +64,19 @@ public class MailSenderFactory {
 			return this;
 		}
 		
+		public MailSender setHtml(boolean isHtml) {
+			this.isHtml = isHtml;
+			return this;
+		}
+		
 		public Result send() {
 	        try {
+	        	String type = isHtml? MediaType.TEXT_HTML_VALUE : MediaType.TEXT_PLAIN_VALUE;
+	        	
 	            config.setFrom(new InternetAddress(sender));
 	            config.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
 	            config.setSubject(subject);
-	            config.setText(content);
+	            config.setContent(content, type);
 	 
 	            Transport.send(config);    // send message
 	            

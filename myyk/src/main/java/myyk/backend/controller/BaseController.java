@@ -16,6 +16,8 @@ public class BaseController extends BaseApp {
 	
 	public static final String MESSAGES = "messages";
 	
+	public static final String RESULT = "result";
+	
 	public static final String ENUMS = "enums";
 	
 	public static final String ENUM_NAME = "name";

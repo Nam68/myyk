@@ -1,16 +1,15 @@
 package myyk.backend.logic;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import myyk.backend.dto.member.CreateMemberDto;
-import myyk.backend.repository.MemberRepository;
 import myyk.backend.domain.MemberEntity;
 import myyk.backend.service.MemberService;
 import myyk.util.enumeration.Result;
 import myyk.util.exception.SystemException;
+import myyk.util.mail.MailSenderFactory;
 
 @Service
 @EnableJpaAuditing
@@ -19,15 +18,15 @@ public class MemberServiceImpl extends BaseLogic implements MemberService {
 	
 	@Transactional
 	@Override
-	public Result create(CreateMemberDto memberDto) throws SystemException {
+	public Result create(CreateMemberDto dto) throws SystemException {
 		
 		MemberEntity memberEntity = new MemberEntity(
-				memberDto.getPassword(),
-				memberDto.getUpperEmail(),
-				memberDto.getLowerEmail(),
-				memberDto.getNickname(),
-				memberDto.getRegion()
-				);
+				dto.getPassword(),
+				dto.getUpperEmail(),
+				dto.getLowerEmail(),
+				dto.getNickname(),
+				dto.getRegion()
+			);
 		
 		getRepositoryManager().getMemberRepository().saveAndFlush(memberEntity);
 		
@@ -35,15 +34,16 @@ public class MemberServiceImpl extends BaseLogic implements MemberService {
 	}
 
 	@Override
-	public Result checkEmail(CreateMemberDto memberDto) throws SystemException {
+	public Result checkEmail(CreateMemberDto dto) throws SystemException {
 		
-		String email = getEncryptedEmail(memberDto.getUpperEmail(), memberDto.getLowerEmail());
-		MemberEntity member = getRepositoryManager().getMemberRepository().findByEmail(email);
+		return MailSenderFactory.getMailSender()
+			.setFrom("test@test.test")
+			.setTo(getEmail(dto.getUpperEmail(), dto.getLowerEmail()))
+			.setSubject("test")
+			.setHtml(true)
+			.setContent("<h1>test</h1><div>hello<a href=\"https://www.naver.com\">test</a></div>" + createVariable(40, null))
+			.send();
 		
-		if(member != null) {
-			return Result.ERROR;
-		}
-		return Result.SUCCESS;
 	}
 	
 
