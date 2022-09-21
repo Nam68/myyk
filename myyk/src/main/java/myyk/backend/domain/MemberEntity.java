@@ -1,6 +1,5 @@
 package myyk.backend.domain;
 
-import java.time.LocalDateTime;
 import java.util.Optional;
 
 import javax.persistence.Column;
@@ -11,14 +10,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.NaturalId;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 
-import myyk.util.BaseApp;
 import myyk.util.enumeration.MemberType;
 import myyk.util.enumeration.Region;
 import myyk.util.exception.SystemException;
@@ -29,6 +23,11 @@ import myyk.util.exception.SystemException;
 @Entity
 @Table(name = "MEMBER_TBL")
 public class MemberEntity extends BaseEntity {
+	
+	/**
+	 * <p>솔트값의 길이.</p>
+	 */
+	private static final int SALT_SIZE = 16;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -136,7 +135,7 @@ public class MemberEntity extends BaseEntity {
 	public void setEmail(String upperEmail, String lowerEmail) throws SystemException {
 		this.upperEmail = encrypt(upperEmail);
 		this.lowerEmail = lowerEmail;
-		this.email = encrypt(upperEmail + "@" + lowerEmail);
+		this.email = encrypt(getEmail(upperEmail, lowerEmail));
 	}
 	
 	/**
@@ -168,7 +167,7 @@ public class MemberEntity extends BaseEntity {
 	
 	// 솔트를 생성해서 비밀번호를 설정한다.
 	private void generatePassword(String password) throws SystemException {
-		this.passwordSalt = createSalt();
+		this.passwordSalt = createVariable(SALT_SIZE, null);
 		this.password = doHashing(password, passwordSalt);
 	}
 }
