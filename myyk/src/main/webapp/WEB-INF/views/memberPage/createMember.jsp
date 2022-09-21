@@ -17,13 +17,6 @@
   <div class="content-body">
     <form action="/myyk/memberPage/createMember.do" method="post">
     
-      <label for="create-member-upper-email" class="form-label h3 primary-dark-color-not-hover"><spring:message code="message.memberPage.createMember.email" /></label>
-      <div class="input-group mb-4">
-	    <input id="create-member-upper-email" type="text" class="form-control" name="upperEmail">
-	    <span class="input-group-text">@</span>
-	    <input type="text" class="form-control" name="lowerEmail">
-	  </div>
-  
   	  <label for="create-member-password" class="form-label h3 primary-dark-color"><spring:message code="message.memberPage.createMember.password" /></label>
   	  <input id="create-member-password" type="password" class="form-control mb-4" name="password">
   	  

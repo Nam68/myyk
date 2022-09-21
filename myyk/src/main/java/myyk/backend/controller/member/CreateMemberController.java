@@ -21,7 +21,7 @@ public class CreateMemberController extends BaseController {
 	
 	@RequestMapping("/createMemberInput.do")
 	@SetEnums(values = {Region.class})
-	public String input() {
+	public String input(CreateMemberDto dto) {
 		return "/memberPage/createMember";
 	}
 	

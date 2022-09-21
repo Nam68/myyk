@@ -23,6 +23,6 @@
       </div>
       <div id="login-btn-div" class="text-end">
         <button type="button" class="btn btn-outline-primary me-2" onclick="location.href='https://www.naver.com'">Login</button>
-        <button type="button" class="btn btn-primary ${headerValue == 'MEMBER' ? 'selected-header' : ''}" onclick="location.href='/myyk/memberPage/createMemberInput.do'">Sign-up</button>
+        <button type="button" class="btn btn-primary ${headerValue == 'MEMBER' ? 'selected-header' : ''}" onclick="location.href='/myyk/memberPage/checkEmailInput.do'">Sign-up</button>
       </div>
     </header>
