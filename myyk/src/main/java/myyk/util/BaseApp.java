@@ -1,17 +1,14 @@
 package myyk.util;
 
-import java.security.InvalidKeyException;
+import java.security.GeneralSecurityException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
 import java.util.Base64;
 import java.util.Base64.Decoder;
 import java.util.Base64.Encoder;
+import java.util.Random;
 
-import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.SecretKeySpec;
 
 import myyk.util.exception.SystemException;
@@ -24,11 +21,6 @@ public class BaseApp {
 	private static final String KEY = "ym7io5uk12u24y59";
 
 	/**
-	 * <p>솔트값의 길이.</p>
-	 */
-	private static final int SALT_SIZE = 16;
-
-	/**
 	 * <p>문자열을 암호화한다.</p>
 	 * 
 	 * @param target 대상 문자열
@@ -36,38 +28,22 @@ public class BaseApp {
 	 * @throws SystemException 웹 전용 예외상황
 	 */
 	public static String encrypt(String target) throws SystemException{
+		
 		byte[] targetBytes = target.getBytes();
-		byte[] key = KEY.getBytes();
-		
-		SecretKeySpec keySpec = null;
-		
-		keySpec = new SecretKeySpec(key, "AES");
-		Cipher cipher = null;
-		try {
-			cipher = Cipher.getInstance("AES");
-		} catch (NoSuchAlgorithmException e) {
-			// ignore log
-			throw new SystemException("encoding failed");
-		} catch (NoSuchPaddingException e) {
-			// ignore log
-			throw new SystemException("encoding failed");
-		}
+		byte[] key = KEY.getBytes();		
 		
 		try {
+			SecretKeySpec keySpec = null;
+			
+			keySpec = new SecretKeySpec(key, "AES");
+			Cipher cipher = Cipher.getInstance("AES");
+			
 			cipher.init(Cipher.ENCRYPT_MODE, keySpec);
-		} catch (InvalidKeyException e) {
-			// ignore log
-			throw new SystemException("encoding failed");
-		}
-		
-		try {
+			
 			Encoder encoder = Base64.getEncoder();
 			return new String(encoder.encode(cipher.doFinal(targetBytes)));
-		} catch (IllegalBlockSizeException e) {
-			// ignore log
-			throw new SystemException("encoding failed");
-		} catch (BadPaddingException e) {
-			// ignore log
+			
+		} catch (GeneralSecurityException e) {
 			throw new SystemException("encoding failed");
 		}
 	}
@@ -80,38 +56,21 @@ public class BaseApp {
 	 * @throws SystemException 웹 전용 예외상황
 	 */
 	public static String decrypt(String encrypted) throws SystemException{
+		
 		byte[] target = encrypted.getBytes();
 		byte[] key = KEY.getBytes();
 		
-		SecretKeySpec keySpec = null;
-		
-		keySpec = new SecretKeySpec(key, "AES");
-		Cipher cipher = null;
 		try {
-			cipher = Cipher.getInstance("AES");
-		} catch (NoSuchAlgorithmException e) {
-			// ignore log
-			throw new SystemException("encoding failed");
-		} catch (NoSuchPaddingException e) {
-			// ignore log
-			throw new SystemException("encoding failed");
-		}
-		
-		try {
+			SecretKeySpec keySpec = null;
+			
+			keySpec = new SecretKeySpec(key, "AES");
+			Cipher cipher = Cipher.getInstance("AES");
+			
 			cipher.init(Cipher.DECRYPT_MODE, keySpec);
-		} catch (InvalidKeyException e) {
-			// ignore log
-			throw new SystemException("encoding failed");
-		}
-		
-		try {
 			Decoder encoder = Base64.getDecoder();
 			return new String(cipher.doFinal(encoder.decode(target)));
-		} catch (IllegalBlockSizeException e) {
-			// ignore log
-			throw new SystemException("encoding failed");
-		} catch (BadPaddingException e) {
-			// ignore log
+			
+		} catch (GeneralSecurityException e) {
 			throw new SystemException("encoding failed");
 		}
 	}
@@ -132,7 +91,6 @@ public class BaseApp {
 		try {
 			md = MessageDigest.getInstance("SHA-256");
 		} catch (NoSuchAlgorithmException e) {
-			// ignore log
 			throw new SystemException("hashing failed");
 		}
  
@@ -147,27 +105,87 @@ public class BaseApp {
 	}
 	
 	/**
-	 * <P>무작위 솔트값을 생성한다.</P>
-	 *  
-	 * @return 솔트
-	 * @throws Exception 모든 예외상황
+	 * <p>난수를 발생시킨다.</p>
+	 * 
+	 * @param length 난수의 길이
+	 * @param seed 시드(null이면 랜덤, 숫자면 해당 숫자에 대한 고정 난수)
+	 * @return 난수
 	 */
-	public static String createSalt() {
-		SecureRandom rnd = new SecureRandom();
-		byte[] temp = new byte[SALT_SIZE];
-		rnd.nextBytes(temp);
+	public static String createVariable(int length, Integer seed) {
+		
+//		SecureRandom r; // 128비트 기반이라 난수가 더 잘 형성되지만 여기선 별 의미 없을듯
+		Random r;
+		if(seed == null) {
+//			r = new SecureRandom();
+			r = new Random();
+		} else {
+//			r = new SecureRandom(seed);
+			r = new Random(seed); // 난수가 순서대로 생성됨
+		}
+		
+		StringBuffer sb = new StringBuffer();
+		
+		int count1 = 0;
+		int count2 = 0;
+		int count3 = 0;
+		int count = 3;
+		
+		for(int i = 0; i < length; i++) {
 			
-		return byteToString(temp);
+			char c;
 			
+			switch(r.nextInt(3)) {
+				case 0:
+					c = (char) (r.nextInt(('Z' - 'A') + 1) + 'A');
+					count1++;
+					count2 = 0;
+					count3 = 0;
+					break;
+				case 1:
+					c = (char) (r.nextInt(('z' - 'a') + 1) + 'a');
+					count1 = 0;
+					count2++;
+					count3 = 0;
+					break;
+				case 2:
+					c = (char) (r.nextInt(('9' - '0') + 1 )+ '0');
+					count1 = 0;
+					count2 = 0;
+					count3++;
+					break;
+				default:
+					c = '_';
+			}
+			
+			if(count1 == count || count2 == count || count3 == count) {
+				c = '_';
+				count1 = 0;
+				count2 = 0;
+				count3 = 0;
+			}
+			sb.append(c);
+		}
+		return sb.toString();
 	}
 	
 	// 바이트 값을 16진수로 변경.
 	private static String byteToString(byte[] temp) {
 		StringBuilder sb = new StringBuilder();
 		for(byte a : temp) {
-			sb.append(String.format("%02x", a));
+			sb.append(Integer.toHexString(a & 0xff));
 		}
 		return sb.toString();
+	}
+	
+	/**
+	 * <p>완성된 이메일을 반환한다.</p>
+	 * 
+	 * @param upperEmail 이메일 상단부
+	 * @param lowerEmail 이메일 하단부
+	 * @return 완성된 이메일
+	 */
+	public static String getEmail(String upperEmail, String lowerEmail) {
+		return upperEmail + "@" + lowerEmail;
 	}
 	
 	/**
