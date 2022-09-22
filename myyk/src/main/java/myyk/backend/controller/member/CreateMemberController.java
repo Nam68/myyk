@@ -31,12 +31,6 @@ public class CreateMemberController extends BaseController {
 		return "redirect:/globalPage/homePage.do";
 	}
 	
-	@RequestMapping(path = "/checkEmailDuplication.do", method = RequestMethod.POST)
-	@ResponseBody
-	public String checkEmailDuplication(CreateMemberDto memberDto) throws SystemException {
-		return getLogicManager().getMemberService().checkEmail(memberDto).toString();
-	}
-	
 	@RequestMapping(path = "/checkEmailExists.do", method = RequestMethod.POST)
 	@ResponseBody
 	public String checkEmailExists(CreateMemberDto memberDto) throws SystemException {
