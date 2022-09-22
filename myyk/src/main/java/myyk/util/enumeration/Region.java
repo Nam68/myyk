@@ -20,4 +20,17 @@ public enum Region implements EnumInterface {
 	public String getValue() {
 		return value;
 	}
+	
+	public static Region getRegion(String language) {
+		
+		if("ko".equals(language)) {
+			return KOREA;
+		} else if("ja".equals(language)) {
+			return JAPAN;
+		} else if("jp".equals(language)) {
+			return JAPAN;
+		} else {
+			return KOREA;
+		}
+	}
 }
