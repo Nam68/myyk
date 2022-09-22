@@ -1,5 +1,7 @@
 package myyk.util.mail;
 
+import java.nio.charset.StandardCharsets;
+
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Transport;
@@ -76,8 +78,8 @@ public class MailSenderFactory {
 	            config.setFrom(new InternetAddress(sender));
 	            config.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
 	            config.setSubject(subject);
-	            config.setContent(content, type);
-	 
+	            config.setContent(content, type + "; charset=UTF-8");
+	            
 	            Transport.send(config);    // send message
 	            
 	            return Result.SUCCESS;
