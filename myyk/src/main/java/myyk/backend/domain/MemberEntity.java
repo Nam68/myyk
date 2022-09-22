@@ -32,7 +32,7 @@ public class MemberEntity extends BaseEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "MEMBER_IDX")
-	private Long idx;
+	private Long memberIdx;
 	
 	@Column(name = "PASSWORD")
 	private String password;
@@ -44,11 +44,11 @@ public class MemberEntity extends BaseEntity {
 	@Column(name = "EMAIL")
 	private String email;
 	
-	@Column(name = "UPPER_EMAIL")
-	private String upperEmail;
+	@Column(name = "LOCAL_PART_EMAIL")
+	private String localPartEmail;
 	
-	@Column(name = "LOWER_EMAIL")
-	private String lowerEmail;
+	@Column(name = "DOMAIN_PART_EMAIL")
+	private String domainPartEmail;
 	
 	@Column(name = "NICKNAME")
 	private String nickname;
@@ -68,12 +68,12 @@ public class MemberEntity extends BaseEntity {
 	
 	public MemberEntity(
 			String password,
-			String upperEmail, 
-			String lowerEmail, 
+			String localPartEmail, 
+			String domainPartEmail, 
 			String nickname, 
 			Region region) throws SystemException {
 		generatePassword(password);
-		setEmail(upperEmail, lowerEmail);
+		setEmail(localPartEmail, domainPartEmail);
 		this.nickname = nickname;
 		this.region = region;
 		this.memberType = MemberType.TMP_MEMBER;
@@ -84,8 +84,8 @@ public class MemberEntity extends BaseEntity {
 	 * 
 	 * @return idx
 	 */
-	public Long getIdx() {
-		return idx;
+	public Long getMemberIdx() {
+		return memberIdx;
 	}
 	
 	/**
@@ -132,10 +132,10 @@ public class MemberEntity extends BaseEntity {
 	 * @param email 이메일
 	 * @throws SystemException 시스템 예외
 	 */
-	public void setEmail(String upperEmail, String lowerEmail) throws SystemException {
-		this.upperEmail = encrypt(upperEmail);
-		this.lowerEmail = lowerEmail;
-		this.email = encrypt(getEmail(upperEmail, lowerEmail));
+	public void setEmail(String localPartEmail, String domainPartEmail) throws SystemException {
+		this.localPartEmail = encrypt(localPartEmail);
+		this.domainPartEmail = domainPartEmail;
+		this.email = getEncryptedEmail(localPartEmail, domainPartEmail);
 	}
 	
 	/**

@@ -146,16 +146,41 @@ public class BaseApp {
 		}
 		return sb.toString();
 	}
-	
+
 	/**
 	 * <p>완성된 이메일을 반환한다.</p>
 	 * 
-	 * @param upperEmail 이메일 상단부
-	 * @param lowerEmail 이메일 하단부
+	 * @param localPartEmail 메일아이디
+	 * @param domainPartEmail 도메인
 	 * @return 완성된 이메일
 	 */
-	public static String getEmail(String upperEmail, String lowerEmail) {
-		return upperEmail + "@" + lowerEmail;
+	public static String getEmail(String localPartEmail, String domainPartEmail) {
+		return localPartEmail + "@" + domainPartEmail;
+	}
+	
+	/**
+	 * <p>암호화된 이메일을 반환한다.</p>
+	 * 
+	 * @param localPartEmail 메일아이디
+	 * @param domainPartEmail 도메인
+	 * @throws SystemException 시스템 예외
+	 */
+	public static String getEncryptedEmail(String localPartEmail, String domainPartEmail) throws SystemException {
+		return encrypt(getEmail(encrypt(localPartEmail), domainPartEmail));
+	}
+	
+	/**
+	 * <p>복호화된 이메일을 반환한다.</p>
+	 * 
+	 * @param encrpytedEmail 암호화된 이메일
+	 * @return 복호화된 이메일
+	 * @throws SystemException 시스템 예외
+	 */
+	public static String getDecryptedEmial(String encrpytedEmail) throws SystemException {
+		String[] decryptedEmail = decrypt(encrpytedEmail).split("@");
+		String localPartEmail = decrypt(decryptedEmail[0]);
+		String domainPartEmail = decryptedEmail[1];
+		return getEmail(localPartEmail, domainPartEmail);
 	}
 	
 	/**
