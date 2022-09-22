@@ -3,12 +3,14 @@ package myyk.util;
 import java.security.GeneralSecurityException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.util.Base64;
 import java.util.Base64.Decoder;
 import java.util.Base64.Encoder;
 import java.util.Random;
 
 import javax.crypto.Cipher;
+import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
 import myyk.util.exception.SystemException;
@@ -18,7 +20,8 @@ public class BaseApp {
 	/**
 	 * <p>양방향 암호화에 사용되는 키값.</p>
 	 */
-	private static final String KEY = "ym7io5uk12u24y59";
+	private static final SecretKey KEY = 
+			(SecretKey) new SecretKeySpec("ym7io5uk12u24y59".getBytes(), "AES");
 
 	/**
 	 * <p>문자열을 암호화한다.</p>
@@ -27,22 +30,11 @@ public class BaseApp {
 	 * @return 암호화된 문자열
 	 * @throws SystemException 웹 전용 예외상황
 	 */
-	public static String encrypt(String target) throws SystemException{
-		
-		byte[] targetBytes = target.getBytes();
-		byte[] key = KEY.getBytes();		
-		
+	public static String encrypt(String target) throws SystemException{	
 		try {
-			SecretKeySpec keySpec = null;
-			
-			keySpec = new SecretKeySpec(key, "AES");
 			Cipher cipher = Cipher.getInstance("AES");
-			
-			cipher.init(Cipher.ENCRYPT_MODE, keySpec);
-			
-			Encoder encoder = Base64.getEncoder();
-			return new String(encoder.encode(cipher.doFinal(targetBytes)));
-			
+			cipher.init(Cipher.ENCRYPT_MODE, KEY);
+			return Base64.getEncoder().encodeToString(cipher.doFinal((target).getBytes()));
 		} catch (GeneralSecurityException e) {
 			throw new SystemException("encoding failed");
 		}
@@ -56,20 +48,10 @@ public class BaseApp {
 	 * @throws SystemException 웹 전용 예외상황
 	 */
 	public static String decrypt(String encrypted) throws SystemException{
-		
-		byte[] target = encrypted.getBytes();
-		byte[] key = KEY.getBytes();
-		
 		try {
-			SecretKeySpec keySpec = null;
-			
-			keySpec = new SecretKeySpec(key, "AES");
 			Cipher cipher = Cipher.getInstance("AES");
-			
-			cipher.init(Cipher.DECRYPT_MODE, keySpec);
-			Decoder encoder = Base64.getDecoder();
-			return new String(cipher.doFinal(encoder.decode(target)));
-			
+			cipher.init(Cipher.DECRYPT_MODE, KEY);
+			return new String(cipher.doFinal(Base64.getDecoder().decode(encrypted.getBytes())));
 		} catch (GeneralSecurityException e) {
 			throw new SystemException("encoding failed");
 		}
@@ -83,25 +65,16 @@ public class BaseApp {
 	 * @return 해싱된 비밀번호
 	 * @throws Exception 모든 예외상황
 	 */
-	public static String doHashing(String password, String Salt) throws SystemException {
-
-		byte[] passwordBytes = password.getBytes();
-		
-		MessageDigest md;
+	public static String doHashing(String target, String salt) throws SystemException {
 		try {
-			md = MessageDigest.getInstance("SHA-256");
+			MessageDigest md = MessageDigest.getInstance("SHA-256");
+			for(int i = 0; i < 10000; i++) {
+				md.update(md.digest((target + salt).getBytes()));
+			}
+			return encrypt(byteToString(md.digest()));
 		} catch (NoSuchAlgorithmException e) {
-			throw new SystemException("hashing failed");
+			throw new SystemException("encoding failed");
 		}
- 
-		// key-stretching
-		for(int i = 0; i < 10000; i++) {
-			String temp = byteToString(passwordBytes) + Salt;
-			md.update(temp.getBytes());
-			passwordBytes = md.digest(); 
-		}
-		
-		return byteToString(passwordBytes);
 	}
 	
 	/**
@@ -111,16 +84,13 @@ public class BaseApp {
 	 * @param seed 시드(null이면 랜덤, 숫자면 해당 숫자에 대한 고정 난수)
 	 * @return 난수
 	 */
-	public static String createVariable(int length, Integer seed) {
+	public static String createVariable(int length, byte[] seed) {
 		
-//		SecureRandom r; // 128비트 기반이라 난수가 더 잘 형성되지만 여기선 별 의미 없을듯
-		Random r;
+		SecureRandom r;
 		if(seed == null) {
-//			r = new SecureRandom();
-			r = new Random();
+			r = new SecureRandom();
 		} else {
-//			r = new SecureRandom(seed);
-			r = new Random(seed); // 난수가 순서대로 생성됨
+			r = new SecureRandom(seed);
 		}
 		
 		StringBuffer sb = new StringBuffer();
