@@ -11,9 +11,9 @@ public class CreateMemberDto {
 	
 	private String nickname = "";
 	
-	private String upperEmail = "";
+	private String localPartEmail = "";
 	
-	private String lowerEmail = "";
+	private String domainPartEmail = "";
 	
 	private Region region;
 
@@ -33,20 +33,20 @@ public class CreateMemberDto {
 		this.nickname = nickname;
 	}
 
-	public String getUpperEmail() {
-		return upperEmail;
+	public String getLocalPartEmail() {
+		return localPartEmail;
 	}
 
-	public void setUpperEmail(String upperEmail) {
-		this.upperEmail = upperEmail;
+	public void setLocalPartEmail(String localPartEmail) {
+		this.localPartEmail = localPartEmail;
 	}
 
-	public String getLowerEmail() {
-		return lowerEmail;
+	public String getDomainPartEmail() {
+		return domainPartEmail;
 	}
 
-	public void setLowerEmail(String lowerEmail) {
-		this.lowerEmail = lowerEmail;
+	public void setDomainPartEmail(String domainPartEmail) {
+		this.domainPartEmail = domainPartEmail;
 	}
 
 	public Region getRegion() {
