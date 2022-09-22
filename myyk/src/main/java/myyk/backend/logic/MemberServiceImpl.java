@@ -1,11 +1,15 @@
 package myyk.backend.logic;
 
+import java.time.LocalDateTime;
+
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import myyk.backend.dto.member.CreateMemberDto;
+import myyk.backend.repository.TmpMemberRepository;
 import myyk.backend.domain.MemberEntity;
+import myyk.backend.domain.TmpMemberEntity;
 import myyk.backend.service.MemberService;
 import myyk.util.enumeration.Region;
 import myyk.util.enumeration.Result;
@@ -35,9 +39,19 @@ public class MemberServiceImpl extends BaseLogic implements MemberService {
 		return null;
 	}
 
+	@Transactional
 	@Override
 	public Result checkEmail(CreateMemberDto dto, Region region) throws SystemException {
 
+		TmpMemberRepository repository = getRepositoryManager().getTmpMemberRepository();
+		
+		int mailCount = repository.findByEmailAndRegisteredDateAfter(
+							getEncryptedEmail(dto.getLocalPartEmail(), dto.getDomainPartEmail()), 
+							LocalDateTime.now().minusHours(1)).size();
+		if(mailCount >= 5) {
+			return Result.SUCCESS;
+		}
+		
 		String subject = null;
 		String title = null;
 		String info = null;
@@ -70,13 +84,23 @@ public class MemberServiceImpl extends BaseLogic implements MemberService {
 				.send();
 		
 		if (result != Result.ERROR) {
-			
-			
-			
+			TmpMemberEntity entity = 
+					new TmpMemberEntity(code, dto.getLocalPartEmail(), dto.getDomainPartEmail());
+			repository.saveAndFlush(entity);
 		}
 		
 		return result;
 	}
 	
+	@Override
+	public Result checkEmailCode(String code) throws SystemException {
+		
+		TmpMemberRepository repository = getRepositoryManager().getTmpMemberRepository();
+		
+		if(repository.findByTmpCodeAndRegisteredDateAfter(code, LocalDateTime.now().minusMinutes(15)) == null) {
+			return Result.ERROR;
+		}
+		return Result.SUCCESS;
+	}
 
 }

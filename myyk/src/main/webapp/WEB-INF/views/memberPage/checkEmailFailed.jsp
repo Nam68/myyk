@@ -11,22 +11,15 @@
 <%@ include file="/WEB-INF/views/header.jsp" %>
 <body>
   
-  <div class="title mx-auto"><spring:message code="message.memberPage.checkEmail.title" /></div>
-
   <div class="content-body mb-3">
-    
-  	  <label for="create-member-upper-email" class="form-label h3 primary-dark-color-not-hover"><spring:message code="message.memberPage.checkEmailComplete.sendEmail" /></label>
-	  
+    <form action="/myyk/globalPage/homePage.do" class="text-center"> 
+  	  <label for="create-member-upper-email" class="form-label h3 primary-dark-color-not-hover mt-4 mb-4"><spring:message code="message.memberPage.checkEmailFailed.message" /></label>
+	
 	  <div class="ok-btn-div">
-  	    <button type="submit" class="btn btn-outline-primary">Return</button>
+  	    <button type="submit" class="btn btn-primary">Home</button>
   	  </div>
-	  
+	</form>  
   </div>
 </body>
-<script>
-$('button[type=submit]').on('click', function(e) {
-	location.href='/myyk/memberPage/checkEmailInput.do';
-});
-</script>
 <%@ include file="/WEB-INF/views/footer.jsp" %>
 </html>

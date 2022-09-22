@@ -12,8 +12,15 @@ public class RepositoryManager {
 	@Autowired
 	private MemberRepository memberRepository;
 	
+	@Autowired
+	private TmpMemberRepository tmpMemberRepository;
+	
 	public MemberRepository getMemberRepository() {
 		return memberRepository;
+	}
+	
+	public TmpMemberRepository getTmpMemberRepository() {
+		return tmpMemberRepository;
 	}
 	
 }

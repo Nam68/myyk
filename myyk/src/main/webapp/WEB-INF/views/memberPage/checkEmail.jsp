@@ -33,5 +33,10 @@
     
   </div>
 </body>
+<script>
+$('button[type=submit]').on('click', function(e) {
+	openLoading();
+});
+</script>
 <%@ include file="/WEB-INF/views/footer.jsp" %>
 </html>

@@ -11,6 +11,8 @@ import myyk.util.exception.SystemException;
 
 public class MailTemplate {
 
+	private static final String MAIL_PATH = "D:/myyk/myyk/src/main/webapp/template/";
+	
 	/**
 	 * <p>메일 html을 문자열 형식으로 돌려준다.</p>
 	 * <p>String.format()을 이용해서 빈 내용을 채워넣을 것.</p>
@@ -21,8 +23,9 @@ public class MailTemplate {
 	 */
 	public static String getHtml(String fileName) throws SystemException {
 		
-		File file = new File(Paths.get("").toAbsolutePath() + "/src/main/webapp/template/" + fileName);
-		
+//		File file = new File(Paths.get("").toAbsolutePath() + "/src/main/webapp/template/" + fileName);
+		File file = new File(MAIL_PATH + fileName);
+
 		StringBuffer sb = new StringBuffer();
 		try (BufferedReader br = new BufferedReader(new FileReader(file))) {
 			String line = "";

@@ -10,6 +10,7 @@ import myyk.backend.dto.member.CreateMemberDto;
 import myyk.util.annotation.ServiceFunction;
 import myyk.util.annotation.SetEnums;
 import myyk.util.enumeration.Region;
+import myyk.util.enumeration.Result;
 import myyk.util.enumeration.ServiceCategory;
 import myyk.util.exception.SystemException;
 import myyk.util.mail.MailSenderFactory;
@@ -21,7 +22,10 @@ public class CreateMemberController extends BaseController {
 	
 	@RequestMapping("/createMemberInput.do")
 	@SetEnums(values = {Region.class})
-	public String input(CreateMemberDto dto) {
+	public String input(String code) throws SystemException {
+		if(getLogicManager().getMemberService().checkEmailCode(code) == Result.ERROR) {
+			return "/memberPage/checkEmailFailed";
+		}
 		return "/memberPage/createMember";
 	}
 	

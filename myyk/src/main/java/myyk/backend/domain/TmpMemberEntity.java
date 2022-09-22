@@ -1,5 +1,7 @@
 package myyk.backend.domain;
 
+import java.util.Optional;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -30,6 +32,14 @@ public class TmpMemberEntity extends BaseEntity {
 	@Column(name = "EMAIL")
 	private String email;	
 	
+	public TmpMemberEntity(
+			String tmpCode, 
+			String localPartEmail, 
+			String domainPartEmail) throws SystemException {
+		this.tmpCode = tmpCode;
+		this.email = getEncryptedEmail(localPartEmail, domainPartEmail);
+	}
+	
 	@Deprecated
 	public TmpMemberEntity() {
 		// TODO Auto-generated constructor stub
@@ -39,18 +49,15 @@ public class TmpMemberEntity extends BaseEntity {
 		return tmpMemberIdx;
 	}
 	
-	public String getTmpCode() {
-		return tmpCode;
+	public Optional<String> getTmpCode() {
+		return Optional.of(tmpCode);
 	}
 	
 	public void setTmpCode(String tmpCode) {
 		this.tmpCode = tmpCode;
 	}
 	
-	public String getEmail() throws SystemException {
-		return decrypt(email);
+	public Optional<String> getEmail() throws SystemException {
+		return Optional.of(getDecryptedEmial(email));
 	}
-	
-	public void setEmail(String )
-	
 }

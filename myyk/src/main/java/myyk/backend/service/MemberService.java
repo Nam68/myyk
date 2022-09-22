@@ -11,4 +11,6 @@ public interface MemberService {
 	
 	Result checkEmail(CreateMemberDto dto, Region region) throws SystemException;
 	
+	Result checkEmailCode(String code) throws SystemException;
+	
 }
