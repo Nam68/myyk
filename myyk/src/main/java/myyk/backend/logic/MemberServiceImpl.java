@@ -7,9 +7,11 @@ import org.springframework.transaction.annotation.Transactional;
 import myyk.backend.dto.member.CreateMemberDto;
 import myyk.backend.domain.MemberEntity;
 import myyk.backend.service.MemberService;
+import myyk.util.enumeration.Region;
 import myyk.util.enumeration.Result;
 import myyk.util.exception.SystemException;
 import myyk.util.mail.MailSenderFactory;
+import myyk.util.mail.MailTemplate;
 
 @Service
 @EnableJpaAuditing
@@ -22,8 +24,8 @@ public class MemberServiceImpl extends BaseLogic implements MemberService {
 		
 		MemberEntity memberEntity = new MemberEntity(
 				dto.getPassword(),
-				dto.getUpperEmail(),
-				dto.getLowerEmail(),
+				dto.getLocalPartEmail(),
+				dto.getDomainPartEmail(),
 				dto.getNickname(),
 				dto.getRegion()
 			);
@@ -34,16 +36,46 @@ public class MemberServiceImpl extends BaseLogic implements MemberService {
 	}
 
 	@Override
-	public Result checkEmail(CreateMemberDto dto) throws SystemException {
+	public Result checkEmail(CreateMemberDto dto, Region region) throws SystemException {
+
+		String subject = null;
+		String title = null;
+		String info = null;
+		String code = createVariable(40, null);
 		
-		return MailSenderFactory.getMailSender()
-			.setFrom("test@test.test")
-			.setTo(getEmail(dto.getUpperEmail(), dto.getLowerEmail()))
-			.setSubject("test")
-			.setHtml(true)
-			.setContent("<h1>test</h1><div>hello<a href=\"https://www.naver.com\">test</a></div>" + createVariable(40, null))
-			.send();
+		if(region == Region.KOREA) {
+			subject = MailTemplate.CHECK_EMAIL_SUBJECT_KO;
+			title = MailTemplate.CHECK_EMAIL_TITLE_KO;
+			info = MailTemplate.CHECK_EMAIL_INFO_KO;
+		} else if(region == Region.JAPAN) {
+			subject = MailTemplate.CHECK_EMAIL_SUBJECT_JA;
+			title = MailTemplate.CHECK_EMAIL_TITLE_JA;
+			info = MailTemplate.CHECK_EMAIL_INFO_JA;
+		} else {
+			subject = MailTemplate.CHECK_EMAIL_SUBJECT_KO;
+			title = MailTemplate.CHECK_EMAIL_TITLE_KO;
+			info = MailTemplate.CHECK_EMAIL_INFO_KO;
+		}
 		
+		Result result = MailSenderFactory.getMailSender()
+				.setTo(getEmail(dto.getLocalPartEmail(), dto.getDomainPartEmail()))
+				.setSubject(subject)
+				.setHtml(true)
+				.setContent(String.format(
+						MailTemplate.getHtml(MailTemplate.CHECK_EMAIL), 
+						title, 
+						info,
+						code,
+						code))
+				.send();
+		
+		if (result != Result.ERROR) {
+			
+			
+			
+		}
+		
+		return result;
 	}
 	
 
