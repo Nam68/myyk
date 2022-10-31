@@ -24,9 +24,9 @@
 	<!-- 데이터베이스에 접근할 데이터 소스 -->
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-		<property name="url" value="jdbc:mysql://210.114.6.196/epoche02"/>
-		<property name="username" value="epoche02"/>
-		<property name="password" value="Tractatus@Witt"/>
+		<property name="url" value="jdbc:mysql://<IP>/<ID>"/>
+		<property name="username" value="<ID>"/>
+		<property name="password" value="<Password>"/>
 	</bean>
 	
 	<!-- 트랜잭션 관리자 설정 -->
